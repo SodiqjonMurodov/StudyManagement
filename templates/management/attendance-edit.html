@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Davomat</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Davomat</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="d-flex justify-content-center">
+    <div class="card py-3" style="width: 500px">
+        <div class="mb-3 mx-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2 class="text-center card-title fs-2 mb-0">Davomat tahrirlash</h2>
+                <div class="row mb-3">
+                    <label for="{{ form.group_id.id_for_label }}"
+                           class="col-form-label">Guruh: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.group_id }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="{{ form.group_member_id.id_for_label }}" class="col-form-label">Guruh a'zosi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.group_member_id }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.date.id_for_label }}" class="col-form-label">Dars sanasi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.date }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.condition.id_for_label }}" class="col-form-label">Sababli: <span class="text-danger">*</span></label>
+                    <div class="mx-3">
+                        {{ form.condition }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary fs-5 w-70">Tahrirlash</button>
+                </div>
+            </form><!-- End Attendance Edit Form -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

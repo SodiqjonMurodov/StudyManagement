@@ -1,0 +1,98 @@
+{% load static %}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'home_page' %}">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'teachers_page' %}">
+                <i class="bi bi-people-fill"></i>
+                <span>Mentorlar</span>
+            </a>
+        </li><!-- End Teachers Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'students_page' %}">
+                <i class="bi bi-people"></i>
+                <span>Talabalar</span>
+            </a>
+        </li><!-- End Students Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#courses-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-briefcase"></i><span>Kurslar</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="courses-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url "courses_page" %}">
+                        <i class="bi bi-circle"></i><span>Barcha Kurslar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "course-add" %}">
+                        <i class="bi bi-circle"></i><span>Kurs Qo'shish</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Courses Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#groups-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-clipboard-check"></i><span>Guruhlar</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'groups' %}">
+                        <i class="bi bi-circle"></i><span>Barcha Guruhlar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'group-add' %}">
+                        <i class="bi bi-circle"></i><span>Guruh Qo'shish</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Groups Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'attendance_admin' %}">
+                <i class="bi bi-calendar-check"></i>
+                <span>Davomat</span>
+            </a>
+        </li><!-- End Attendance Nav -->
+
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'permissions' %}">
+                <i class="bi bi-file-text"></i>
+                <span>Arizalar</span>
+            </a>
+        </li><!-- End Payment Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'messages' %}">
+                <i class="bi bi-envelope"></i>
+                <span>Xabarlar</span>
+            </a>
+        </li><!-- End Payment Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'contact-edit' pk=1 %}">
+                <i class="bi bi-building"></i>
+                <span>O'quv markaz</span>
+            </a>
+        </li><!-- End Company Edit Nav -->
+    </ul>
+
+</aside><!-- End Sidebar-->

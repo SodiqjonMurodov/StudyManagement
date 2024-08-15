@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>O'quv markazi</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Kompaniya</li>
+            <li class="breadcrumb-item active">O'quv markaz</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="d-flex justify-content-center">
+    <div class="card py-3" style="width: 550px">
+        <div class="mb-3 mx-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2 class="text-center card-title fs-2">O'quv markaz ma'lumotlari</h2>
+                <div class="row mb-3">
+                    <label for="{{ form.name.id_for_label }}"
+                           class="col-form-label">O'quv markaz nomi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.name }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.address.id_for_label }}" class="col-form-label">Manzil: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.address }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.phone.id_for_label }}" class="col-form-label">Telefon raqam: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.phone }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="col-form-label">Email: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.start_day.id_for_label }}" class="col-form-label">Ish kuni: <span class="text-danger">*</span></label>
+                    <div class="col-6">
+                        <div class="d-flex">
+                            {{ form.start_day }}
+                            <p class="align-self-center m-0 mx-2">dan</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex ">
+                            {{ form.end_day }}
+                            <p class="align-self-center m-0 mx-2">gacha</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.start_time.id_for_label }}" class="col-form-label">Ish vaqti: <span class="text-danger">*</span></label>
+                    <div class="col-6">
+                        <div class="d-flex">
+                            {{ form.start_time }}
+                            <p class="align-self-center m-0 mx-2">dan</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex mx-2">
+                            {{ form.end_time }}
+                            <p class="align-self-center m-0 mx-2">gacha</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary px-3 fs-5">Tasdiqlash</button>
+                </div>
+            </form><!-- End Profile Edit Form -->
+        </div>
+    </div>
+</div>
+{% endblock %}

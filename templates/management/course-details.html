@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kurs ma'lumotlari{% endblock %}
+
+
+{% block css_links %}
+<link rel="stylesheet" href="{% static 'css/course-details.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Kurs ma'lumotlari</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Asosiy sahifa</li>
+        <li class="breadcrumb-item active">Kurslar</li>
+        <li class="breadcrumb-item active">Kurs ma'lumotlari</li>
+      </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row mb-3">
+    <div class="col-lg-8 col-md-12">
+      <h1 class="course-name">{{ object.course_id.name }}</h1>
+      {% if object.course_id.image %}
+        <img src="{{ object.course_id.image.url }}" alt="{{ object.image }}" class="w-100 mb-3">
+      {% else %}
+        <img src="{% static 'img/default-course.png' %}" alt="default-course" class="w-100 mb-3">
+      {% endif %}
+    </div>
+    <div class="col-lg-4 col-md-12 py-3">
+      <div class="card sidebar_course p-3">
+        <h3 class="text-white py-3 px-4 m-0">Kurs ma'lumotlari</h3>
+        <div class="d-flex justify-content-between border-bottom px-4">
+        <h6 class="text-white my-3">Mentor:</h6>
+        <h6 class="text-white my-3">{{ object.mentor_id.first_name }} {{ object.mentor_id.last_name }}</h6>
+        </div>
+        <div class="d-flex justify-content-between border-bottom px-4">
+          <h6 class="text-white my-3">Guruh:</h6>
+          <h6 class="text-white my-3">{{ object.name }}</h6>
+        </div>
+        <div class="d-flex justify-content-between border-bottom px-4">
+        <h6 class="text-white my-3">Talabalar soni:</h6>
+        <h6 class="text-white my-3">{{ members|length }}/{{ object.students }}</h6>
+        </div>
+        <div class="d-flex justify-content-between border-bottom px-4">
+        <h6 class="text-white my-3">Boshlanish sanasi:</h6>
+        <h6 class="text-white my-3">{{ object.start_period|date:"d.m.Y" }}</h6>
+        </div>
+        <div class="d-flex justify-content-between px-4">
+        <h6 class="text-white my-3">Tugash sanasi:</h6>
+        <h6 class="text-white my-3">{{ object.end_period|date:"d.m.Y" }}</h6>
+        </div>
+
+        {% comment %} Student Roli {% endcomment %}
+        {% if request.user.groups.all.0.name == "Student" %}
+          {% if group_member.permission == "1" %}
+          <h5 class="py-4 px-4 m-0 course-price">Kurs Narxi: {{ object.course_id.price }} so'm</h5>
+          <div class="d-flex justify-content-center">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#payment_form" class="btn btn-block btn-success py-3 px-4 disabled">To'lov qilish</a>
+          </div>
+          {% elif group_member.permission %}
+          <h5 class="py-4 px-4 m-0 course-price">Kurs Narxi: {{ object.course_id.price }} so'm</h5>
+          <div class="d-flex justify-content-center">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#payment_form" class="btn btn-block btn-success py-3 px-4">To'lov qilish</a>
+          </div>
+          <div class="modal fade" id="payment_form" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="card-title fs-2 text-center p-0">Ariza yuborish</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-3 pb-3 w-auto">
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <label for="{{ form.name.id_for_label }}"
+                               class="col-form-label">Kvitansiya: <span class="text-danger">*</span></label>
+                        <div>
+                            {{ form.file }}
+                        </div>
+                    </div>
+    
+                    <div class="row mb-3">
+                        <label for="{{ form.address.id_for_label }}" class="col-form-label">Izoh:</label>
+                        <div>
+                            {{ form.description }}
+                        </div>
+                    </div>
+                    <p class="text-danger text-center">Ariza yuborilgandan keyin tizim administratori ruxsatini kuting. Bu ko'pi bilan 24 soat vaqt olishi mumkin.</p>
+                    
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary px-3 fs-5">Tasdiqlash</button>
+                    </div>
+                  </form><!-- End Payment Form -->
+                </div>
+              </div>
+            </div>
+          </div><!-- End Vertically centered Modal-->
+          {% else %}
+          <h5 class="py-4 px-4 m-0 course-price">Kurs Narxi: {{ object.course_id.price }} so'm</h5>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-block btn-success py-3 px-4" href="{% url 'permission_add' object.id %}">Obuna bo'lish</a>
+          </div>
+        {% endif %} 
+
+        {% comment %} Mentor Roli {% endcomment %}
+        {% elif request.user.groups.all.0.name == "Mentor" %}
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-block btn-success py-3 px-4" href="{% url 'group_content_add' gr=object.id %}">Yangi mavzu qo'shish</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fs-6 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Batafsil ma'lumot</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fs-6" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Mavzular</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fs-6" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Ishtirokchilar</button>
+      </li>
+      {% if student_checks %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fs-6" id="checks-tab" data-bs-toggle="tab" data-bs-target="#checks" type="button" role="tab" aria-controls="checks" aria-selected="false">To'lovlar tarixi</button>
+      </li>
+      {% endif %}
+    </ul>
+
+
+
+<div class="tab-content pt-2 px-2 mb-3" id="myTabContent">
+  <!-- Batafsil ma'lumot -->
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <p class="text-dark pb-1"><b>Kurs kunlari: </b>{{ object.study_days }}</p>
+    <p class="text-dark pb-1"><b>Kurs vaqti: </b>{{ object.start_time }} dan {{ object.end_time }} gacha</p>
+    <p class="course-desc">{{ object.course_id.description }}</p>
+  </div>
+  <!-- Mavzular -->
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="list-group">
+
+      {% if content %}
+        {% for topic in content %}
+
+          {% comment %} Student Role {% endcomment %}
+          {% if request.user.groups.all.0.name == "Student" %}
+            {% if group_member.permission == "1" %}
+              <a type="button" data-bs-toggle="modal" data-bs-target="#modal{{topic.id}}" class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between">
+                  <p><i class="bi bi-file-earmark"></i> {{ topic.topic }}</p>
+                </div>
+              </a>
+              <div class="modal fade" id="modal{{topic.id}}" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">{{topic.topic|truncatechars:35}}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0 pb-3 w-auto">
+                      <table class="table table-striped">
+                          <tr>
+                            <th class="text-nowrap" scope="col">Kurs nomi</th>
+                            <td>{{ topic.group_id.course_id.name }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Guruh</th>
+                            <td>{{ topic.group_id.name }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Mentor</th>
+                            <td>{{ topic.group_id.mentor_id.last_name }} {{ topic.group_id.mentor_id.last_name }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Sarlavha</th>
+                            <td>{{ topic.topic }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Izoh</th>
+                            <td>{{ topic.description }}</td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Fayl</th>
+                            <td><a href="{% url 'download_file' topic.id %}">{{ topic.file|truncatechars:35 }}</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="col">Yaratilgan</th>
+                            <td>{{ topic.created_at }}</td>
+                          </tr>
+                      </table>
+                      <div class="mx-3 d-flex justify-content-end">
+                        <a href="{% url 'download_file' topic.id %}" class="btn btn-primary">Yuklab olish</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Vertically centered Modal-->
+            {% else %}
+              <a href="#" class="list-group-item list-group-item-action disabled">
+                <div class="d-flex justify-content-between">
+                  <p><i class="bi bi-file-earmark"></i> {{ topic.topic }}</p>
+                  <p><i class="bi bi-lock px-3"></i></p>
+                </div>
+              </a>
+            {% endif %}
+
+          {% comment %} Mentor Role {% endcomment %}
+          {% elif request.user.groups.all.0.name == "Mentor" %}
+            <div class="d-flex justify-content-between align-items-center list-group-item list-group-item-action">
+              <p><i class="bi bi-file-earmark"></i> {{ topic.topic }}</p>
+              <div class="d-flex">
+                  <a class="btn btn-primary mx-2" href="{% url 'group_content_edit' pk=topic.id %}"><i class="bi bi-pencil"></i></a>
+                  <a class="btn btn-danger" href="{% url 'group_content_delete' pk=topic.id %}"><i class="bi bi-trash"></i></a>
+              </div>
+            </div>
+          {% endif %}
+
+        {% endfor %}
+      {% else %}
+        <p class="p-5 fs-5 text-center">Mavzular mavjud emas!</p>
+      {% endif %}
+    </div>
+  </div>
+  <!-- Ishtirokchilar -->
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Student</th>
+          <th scope="col">Jins</th>
+          <th scope="col">Email</th>
+          <th scope="col">Tug'ilgan sana</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if members %}
+          {% for member in members %}
+            <tr class="group-members">
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>
+                {% if member.student_id.imange %}
+                <img src="{{ member.student_id.imange.url }}" width="30px" height="30px">
+                {% else %}
+                <img src="{% static 'img/user.png' %}" width="30px" height="30px">
+                {% endif %}
+                {{ member.student_id.last_name }} {{ member.student_id.first_name }}</td>
+              <td>
+                {% if member.student_id.gender == "1" %}
+                Erkak
+                {% elif member.student_id.gender == "2" %}
+                Ayol
+                {% endif %}
+              </td>
+              <td>{{ member.student_id.email }}</td>
+              <td>{{ member.student_id.birthday }}</td>
+            </tr> 
+          {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="6" class="text-center p-5 fs-5">Guruh ishtirokchilari mavjud emas!</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <!-- Kvitansiyalar -->
+  <div class="tab-pane fade" id="checks" role="tabpanel" aria-labelledby="checks-tab">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Sana</th>
+          <th scope="col">Kvitansiya</th>
+          <th scope="col">Izoh</th>
+          <th scope="col">Holat</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if student_checks %}
+          {% for check in student_checks %}
+            <tr class="group-members">
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ check.created_at|date:"d/m/Y" }}</td>
+              <td><a href="{% url 'download_check' check.id %}" class="text-dark">{{ check.file|truncatechars:45 }}</a></td>
+              <td><a href="#" class="text-dark">{{ check.description|truncatechars:70 }}</a></td>
+              <td><a href="#" class="text-dark">
+                {% if check.group_member_id.permission == "0" %}
+                Noaniq
+                {% elif check.group_member_id.permission == "1" %}
+                Aktiv
+                {% elif check.group_member_id.permission == "2" %}
+                Taqiqlangan
+                {% endif %}
+              </a></td>
+            </tr> 
+          {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="6" class="text-center p-5 fs-5">Guruh ishtirokchilari mavjud emas!</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div><!-- End Default Tabs -->
+
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Talabalar</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Talabalar</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+            <div class="card mb-3">
+
+                <div class="card-body">
+
+                    <div class="pt-4 pb-2">
+                        <h5 class="card-title text-center pb-0 fs-4">Akkaunt o'chirish</h5>
+                        <div class="d-flex justify-content-center">
+                            <img src="{% static 'img/delete.png' %}" alt="delete_icon" width="60px"
+                                 class="justify-content-center">
+                        </div>
+                    </div>
+
+                    <form class="row g-3" method="post">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <p class="text-center fs-5 px-3">Siz <b>"{{ object }}"</b> foydalanuvchini tizimdan
+                                o'chirishga aminmisiz?</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:history.back()" class="btn btn-secondary mx-2">Bekor qilish</a>
+                            <input type="submit" value="Tasdiqlash" class="btn btn-danger mx-2">
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

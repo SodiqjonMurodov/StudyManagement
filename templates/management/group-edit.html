@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Guruh tahrirlash</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Guruhlar</li>
+            <li class="breadcrumb-item active">Guruh tahrirlash</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="d-flex justify-content-center">
+    <div class="card py-3" style="width: 500px">
+        <div class="mb-3 mx-5">
+            <form method="post">
+                {% csrf_token %}
+                <h2 class="text-center card-title fs-2 mb-0">Guruh tahrirlash</h2>
+                <div class="row mb-3">
+                    <label for="{{ form.name.id_for_label }}"
+                           class="col-form-label">Guruh nomi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.name }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.course_id.id_for_label }}" class="col-form-label">Kurs nomi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.course_id }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.mentor_id.id_for_label }}" class="col-form-label">Mentor: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.mentor_id }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.students.id_for_label }}" class="col-form-label">Studentlar soni: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.students }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.start_period.id_for_label }}" class="col-form-label">Boshlanish periodi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.start_period }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.end_period.id_for_label }}" class="col-form-label">Tugash periodi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.end_period }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.end_period.id_for_label }}" class="col-form-label">Kurs kunlari: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.study_days }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.end_period.id_for_label }}" class="col-form-label">Boshlanish vaqti: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.start_time }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.end_period.id_for_label }}" class="col-form-label">Tugash vaqti: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.end_time }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary fs-5 w-70">Tahrirlash</button>
+                </div>
+            </form><!-- End Profile Edit Form -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

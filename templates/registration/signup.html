@@ -1,0 +1,79 @@
+{% extends 'registration/auth-base.html' %}
+{% load static %}
+
+{% block title %}Ro'yxatdan o'tish{% endblock %}
+
+{% block auth %}
+<main>
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="d-flex justify-content-center py-4">
+                            <a href="{% url 'home_page' %}" class="logo d-flex align-items-center w-auto">
+                                <img src="{% static 'img/logo/logo.png' %}" alt="logo">
+                                <span class="d-none d-lg-block">SmartEducate</span>
+                            </a>
+                        </div><!-- End Logo -->
+
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Akkaunt yaratish</h5>
+                                    <p class="text-center small">Akkaunt yaratish uchun ma'lumotlaringizni
+                                        kiriting</p>
+                                </div>
+
+                                <form class="row g-3" method="post">
+                                    {% csrf_token %}
+                                    <div class="col-12">
+                                        <label for="yourUsername" class="form-label">Username</label>
+                                        <input type="text" name="username" class="form-control" id="yourUsername"
+                                               required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="yourPassword1" class="form-label">Parol</label>
+                                        <input type="password" name="password1" class="form-control" id="yourPassword1"
+                                               required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="yourPassword2" class="form-label">Parolni tasdiqlash</label>
+                                        <input type="password" name="password2" class="form-control" id="yourPassword2"
+                                               required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="terms" type="checkbox" id="acceptTerms" required>
+                                            <label class="form-check-label" for="acceptTerms">Men tizimdagi barcha <a href="{% url 'terms-and-policy' %}">qoida va shartlarga</a> roziman va qabul qilaman</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Akkaunt yaratish</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Tizimda akkauntingiz bormi? <a href="{% url 'login' %}">Tizimga
+                                            kirish</a>
+                                        </p>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main><!-- End #main -->
+
+{% endblock %}

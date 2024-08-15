@@ -1,0 +1,38 @@
+{% load static %}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'home_page' %}">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'groups_mentor' %}">
+                <i class="bi bi-grid"></i>
+                <span>Mening guruhlarim</span>
+            </a>
+        </li><!-- End Teachers Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'attendance_mentor' %}">
+                <i class="bi bi-calendar-check"></i>
+                <span>Davomat</span>
+            </a>
+        </li><!-- End Students Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'contact' %}">
+                <i class="bi bi-person-rolodex"></i>
+                <span>Kontakt</span>
+            </a>
+        </li><!-- End 404 Error Nav -->
+    </ul>
+
+</aside><!-- End Sidebar-->

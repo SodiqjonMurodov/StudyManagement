@@ -1,0 +1,46 @@
+{% load static %}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'home_page' %}">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'courses_student' %}">
+                <i class="bi bi-briefcase"></i>
+                <span>Kurslar</span>
+            </a>
+        </li><!-- End Courses Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'my_courses' %}">
+                <i class="bi bi-card-checklist"></i>
+                <span>Mening kurslarim</span>
+            </a>
+        </li><!-- End My Courses Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'attendance_student' %}">
+                <i class="bi bi-calendar-check"></i>
+                <span>Davomat</span>
+            </a>
+        </li><!-- End Attendance Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'contact' %}">
+                <i class="bi bi-person-rolodex"></i>
+                <span>Kontakt</span>
+            </a>
+        </li><!-- End Contact Nav -->
+
+    </ul>
+
+</aside><!-- End Sidebar-->

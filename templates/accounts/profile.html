@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SmartEducate - o'quv markazi{% endblock %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Mening profilim</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Profil</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-4">
+
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                    {% if profile.image %}
+                        <img src="{{ view.get_profile.image.url }}" alt="Profile" class="rounded-circle" width="120px" height="120px">
+                    {% else %}
+                        <img src="{% static 'img/user.png' %}" alt="Profile" class="rounded-circle">
+                    {% endif %}
+
+                    <h2>{{ view.get_profile.last_name|capfirst }} {{ view.get_profile.first_name|capfirst }}</h2>
+                    {% if request.user.groups.all.0.name == "Student" %}
+                    <h3>Student</h3>
+                    {% elif request.user.groups.all.0.name == "Mentor" %}
+                    <h3>Mentor</h3>
+                    {% else %}
+                    <h3>Admin</h3>
+                    {% endif %}
+                    <div class="social-links mt-2">
+                        <a href="{{ view.get_profile.facebook_link }}" class="facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                        <a href="{{ view.get_profile.telegram_link }}" class="telegram" target="_blank"><i class="bi bi-telegram"></i></a>
+                        <a href="{{ view.get_profile.instagram_link }}" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                        <a href="{{ view.get_profile.twitter_link }}" class="twitter" target="_blank"><i class="bi bi-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                                Umumiy Ma'lumot
+                            </button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Profil
+                                Tahrirlash
+                            </button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2">
+
+                        <!-- Profile Overview Form -->
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                            {% if profile.about %}
+                            <h5 class="card-title my-0">Ma'lumotnoma</h5>
+                            <p class="small fst-italic">{{ view.get_profile.about }}</p>
+                            {% endif %}
+
+                            <h5 class="card-title">Profil Tafsilotlari</h5>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Familiya</div>
+                                <div class="col-lg-9 col-md-8">{{ view.get_profile.last_name|capfirst }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Ism</div>
+                                <div class="col-lg-9 col-md-8">{{ view.get_profile.first_name|capfirst }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Jins</div>
+                                <div class="col-lg-9 col-md-8">
+                                    {% if view.get_profile.gender == "1" %}
+                                    Erkak
+                                    {% else %}
+                                    Ayol
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Tug'ilgan sana</div>
+                                <div class="col-lg-9 col-md-8">{{ view.get_profile.birthday|date:"d.m.Y" }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Telefon raqam</div>
+                                <div class="col-lg-9 col-md-8">{{ view.get_profile.phone }}</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                <div class="col-lg-9 col-md-8">{{ view.get_profile.email }}</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Profile Edit Form -->
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                {{ form.user_id }}
+
+                                <div class="row mb-3">
+                                    <label for="{{form.image.id_for_label}}" class="col-md-4 col-lg-3 col-form-label">Profil rasmi</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {% if view.get_profile.image %}
+                                            <img src="{{ view.get_profile.image.url }}" alt="Profile">
+                                        {% else %}
+                                            <img src="{% static 'img/user.png' %}" alt="Profile">
+                                        {% endif %}
+                                      <div class="pt-2">
+                                        <input type="file" name="{{form.image.name}}" id="{{form.image.id_for_label}}">
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Familiya</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.last_name }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Ism</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.first_name }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.gender.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Jins</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.gender }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.birthday.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Tug'ilgan
+                                        sana</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.birthday }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.phone.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Telefon raqam</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.phone }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.email.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.email }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.about.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Men haqimda</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.about }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.facebook_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Facebook
+                                        Profil</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.facebook_link }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.telegram_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Telegram
+                                        Profil</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.telegram_link }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.instagram_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Instagram
+                                        Profil</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.instagram_link }}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="{{ form.twitter_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Twitter
+                                        Profil</label>
+                                    <div class="col-md-8 col-lg-9">
+                                        {{ form.twitter_link }}
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                                </div>
+                            </form><!-- End Profile Edit Form -->
+
+                        </div>
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Kurs qo'shish</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Kurslar</li>
+            <li class="breadcrumb-item active">Kurs qo'shish</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="d-flex justify-content-center">
+    <div class="card py-3">
+        <div class="mb-3 mx-5">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2 class="text-center card-title fs-2">Kurs qo'shish</h2>
+                <div class="row mb-3">
+                    <label for="{{ form.name.id_for_label }}"
+                           class="col-form-label">Nomi: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.name }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.price.id_for_label }}" class="col-form-label">Narxi(so'm): <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.price }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="{{ form.image.id_for_label }}" class="col-form-label">Rasmi: </label>
+                    <div class="px-4">
+                        <input type="file" name="{{form.image.name}}" id="{{form.image.id_for_label}}">
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.description.id_for_label }}" class="col-form-label">Tavsif: <span class="text-danger">*</span></label>
+                    <div>
+                        {{ form.description }}
+                    </div>
+                </div>
+                
+    
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-3 py-2 fs-5">Yaratish</button>
+                </div>
+            </form><!-- End Profile Edit Form -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

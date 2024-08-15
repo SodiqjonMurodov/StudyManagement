@@ -1,0 +1,68 @@
+p {
+    margin: 0;
+}
+
+.course-name {
+    font-family:Arial, Helvetica, sans-serif;
+    color: rgb(1, 4, 64);
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 20px;
+    margin: 0;
+    padding-top: 15px;
+}
+
+.sidebar_course {
+    background-color: rgb(4, 86, 158);
+    border-radius: 5px;
+    height: auto;
+}
+
+.course-price {
+    color:rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.list-group-item:hover {
+    color:blue;
+}
+
+.course-desc {
+    font-family:'Times New Roman', Times, serif;
+    text-indent: 24px;
+    /* font-style: italic; */
+    font-size: 18px;
+}
+
+.edit-btn {
+    border: 1px solid rgb(41, 98, 222);
+    border-radius: 5px;
+    background-color: rgb(41, 98, 222);
+    padding: 0 15px;
+    color: white;
+}
+
+.edit-btn:hover {
+    border: 1px solid rgb(0, 56, 176);
+    background-color: rgb(0, 56, 176);
+    color: white;
+}
+
+.delete-btn {
+    border: 1px solid rgb(177, 10, 10);
+    border-radius: 5px;
+    background-color: rgb(222, 41, 41);
+    padding: 5px 15px;
+    color: white;
+}
+
+.checks-card {
+    background-color: rgb(255, 254, 232) !important;
+}
+
+.student-info-card {
+    background-color: rgb(238, 248, 255);
+}

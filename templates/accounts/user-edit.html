@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Foydalanuvchi tahrirlash</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Foydalanuvchi tahrirlash</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="d-flex justify-content-center">
+    <div class="card py-5">
+        <div class="mb-3 mx-5">
+            <form method="post">
+                {% csrf_token %}
+    
+                <h2 class="text-center mb-4">Foydalanuvchi ma'lumotlari</h2>
+
+                {{ form.user_id }}
+    
+                <div class="row mb-3">
+                    <label for="{{ form.last_name.id_for_label }}"
+                           class="col-md-4 col-lg-3 col-form-label">Familiya <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.last_name }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.first_name.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Ism <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.first_name }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.gender.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Jins <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.gender }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.birthday.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Tug'ilgan
+                        sana <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.birthday }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.email.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Email <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.email }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.phone.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Telefon
+                        raqam <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.phone }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.role.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Rol <span class="text-danger">*</span></label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.role }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.about.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Men
+                        haqimda</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.about }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.facebook_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Facebook
+                        Profil</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.facebook_link }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.telegram_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Telegram
+                        Profil</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.telegram_link }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.instagram_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Instagram
+                        Profil</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.instagram_link }}
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <label for="{{ form.twitter_link.id_for_label }}" class="col-md-4 col-lg-3 col-form-label">Twitter
+                        Profil</label>
+                    <div class="col-md-8 col-lg-9">
+                        {{ form.twitter_link }}
+                    </div>
+                </div>
+    
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Tahrirlash</button>
+                </div>
+            </form><!-- End Profile Edit Form -->
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Barcha guruhlar</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Asosiy sahifa</li>
+            <li class="breadcrumb-item active">Guruhlar</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+<div class="row">
+    <div class="col-lg-9 col-md-8">
+        <div class="row">
+            {% for group in page_obj %}
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="card-title m-0 p-0 pt-3 fs-3">{{ group.name|capfirst }}</h5>
+                            {% if group.end_period < view.get_today %}
+                                <span class="badge bg-danger">Yopilgan</span>
+                            {% elif group.start_period < view.get_today %}
+                                <span class="badge bg-success">Jarayonda</span>
+                            {% elif group.start_period > view.get_today %}
+                                <span class="badge bg-warning">Tanlov</span>
+                            {% endif %}
+                        </div>
+                        <p class="m-0 fs-5">{{ group.course_id }}</p>
+                        <p class="text-secondary m-0 fs-6">
+                            {{group.start_period|date:"d.m.Y"}} dan {{group.end_period|date:"d.m.Y"}} gacha</p>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="">
+                                <p class="m-0 fs-5 align-self-end">
+                                    {{ group.mentor_id.first_name }} {{ group.mentor_id.last_name }}</p>
+                                <p class="m-0 fs-6 text-primary">{{ group.students }} ta student</p>
+                            </div>
+                            <div class="d-flex align-items-end">
+                                <a class="btn btn-primary mx-2 px-3" href="{% url 'group-edit' pk=group.id %}"><i
+                                        class="bi bi-pencil"></i></a>
+                                <a class="btn btn-danger px-3" href="{% url 'group-delete' pk=group.id %}"><i
+                                        class="bi bi-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="card px-3 py-1">
+            <form action="{% url 'filter' %}" method="get">
+                <h5 class="col-form-label fs-5">Kurslar:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck2" name="course_id">
+                    <label class="form-check-label fs-6" for="gridCheck2">Barcha kurslar</label>
+                </div>
+                {% for course in view.get_courses %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="{{ course.id }}" name="course_id" value="{{ course.id }}">
+                    <label class="form-check-label fs-6" for="{{ course.id }}">
+                        {{ course.name }}
+                    </label>
+                </div>
+                {% endfor %}
+                <input type="submit" class="btn btn-primary btn-block w-100 my-2" value="Filtrlash">
+            </form>
+        </div>
+    </div>
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{page_obj.previous_page_number}}" class="page-link">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" aria-disabled="true">&laquo;</a>
+                    </li>
+                {% endif %}
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                    {% else %}
+                    <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link disabled">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav><!-- End Centered Pagination -->
+    {% endif %}
+
+</div>
+
+
+
+
+{% endblock content %}

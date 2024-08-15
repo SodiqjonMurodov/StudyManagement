@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Mening guruhlarim{% endblock  %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Mening guruhlarim</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Asosiy sahifa</li>
+            <li class="breadcrumb-item active">Guruhlar</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+<div class="row">
+    {% for group in page_obj %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="card-title m-0 p-0 pt-3 fs-3">{{ group.name|capfirst }}</h5>
+                    {% if group.end_period < view.get_today %}
+                        <span class="badge bg-danger">Yopilgan</span>
+                    {% elif group.start_period < view.get_today %}
+                        <span class="badge bg-success">Jarayonda</span>
+                    {% elif group.start_period > view.get_today %}
+                        <span class="badge bg-warning">Tanlov</span>
+                    {% endif %}
+                </div>
+                <p class="m-0 fs-5">{{ group.course_id }}</p>
+                <p class="text-secondary m-0 fs-6">
+                    {{group.start_period|date:"d.m.Y"}} dan {{group.end_period|date:"d.m.Y"}} gacha</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="">
+                        <p class="m-0 fs-5 align-self-end">
+                            {{ group.mentor_id.first_name }} {{ group.mentor_id.last_name }}</p>
+                        <p class="m-0 fs-6 text-primary">{{ group.students }} ta student</p>
+                    </div>
+                    <div class="d-flex align-items-end">
+                        {% if group.end_period < view.get_today %}
+                            <a class="btn btn-primary disabled" href="{% url 'course_details' pk=group.id %}">Tahrirlash</a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'course_details' pk=group.id %}">Tahrirlash</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% if is_paginated %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a href="?page={{page_obj.previous_page_number}}" class="page-link">&laquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-disabled="true">&laquo;</a>
+        </li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+        {% else %}
+        <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link disabled">&raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav><!-- End Centered Pagination -->
+{% endif %}
+
+
+{% endblock content %}

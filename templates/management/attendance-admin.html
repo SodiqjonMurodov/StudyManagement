@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Davomat</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Asosiy sahifa</li>
+        <li class="breadcrumb-item active">Davomat</li>
+      </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table datatable">
+                        <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Guruh nomi</th>
+                            <th data-type="date" data-format="DD/MM/YYYY">Dars sanasi</th>
+                            <th>Sababli</th>
+                            <th>Mentor</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for value in attendance %}
+                            <tr>
+                                <td>{{value.group_member_id.student_id.last_name}} {{value.group_member_id.student_id.first_name}}</td>
+                                <td>{{value.group_id.name}}</td>
+                                <td>{{value.date|date:"d/m/Y"}}</td>
+                                {% if value.condition == "1" %}
+                                    <td>Ha</td>
+                                {% else %}
+                                    <td>Yo'q</td>
+                                {% endif %}
+                                <td>{{value.group_id.mentor_id.last_name}} {{value.group_id.mentor_id.first_name}}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-size" href="{% url 'attendance_edit' pk=value.id %}"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <a class="btn btn-danger btn-size" href="{% url 'attendance_delete' pk=value.id %}"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

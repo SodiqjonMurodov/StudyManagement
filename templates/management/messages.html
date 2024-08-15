@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Xabarlar{% endblock  %}
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Xabarlar</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active"><a href="{% url 'home_page' %}">Asosiy sahifa</a></li>
+            <li class="breadcrumb-item active">Xabarlar</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row">
+{% for message in page_obj %}
+    <div class="card mx-3 col-md-5">
+        <div class="card-header py-2 d-flex align-items-center">
+            {% if message.usr_id.image %}
+            <img src="{{ message.usr_id.image.url }}" alt="profile_img" width="30px">
+            {% else %}
+            <img src="{% static 'img/user.png' %}" alt="profile_img" width="30px">
+            {% endif %}
+            <h3 class="card-title p-0 m-0 mx-2">{{ message.user_id.last_name }} {{ message.user_id.first_name }}</h3>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title py-2 m-0">{{ message.title|capfirst }}</h4>
+            <p class="m-0">{{ message.message|capfirst }}</p>
+            <p class="text-metud text-end m-0"><i class="bi bi-calendar-week"></i> {{ message.created_at|date:'Y-m-d H:i' }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+{% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{page_obj.previous_page_number}}" class="page-link">&laquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" aria-disabled="true">&laquo;</a>
+                </li>
+            {% endif %}
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                {% else %}
+                <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">&raquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link disabled">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav><!-- End Centered Pagination -->
+{% endif %}
+
+</div>
+
+
+
+{% endblock %}

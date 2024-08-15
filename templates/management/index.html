@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SmartEducate - o'quv markazi{% endblock %}
+
+{% block css_links %}
+<link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock  %}
+
+{% block js_links %}
+<script src="{% static 'js/calendar.js' %}"></script>
+{% endblock  %}
+
+
+
+
+{% block content %}
+<!-- Start Page Title -->
+<div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Asosiy sahifa</li>
+            <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-7 col-sm-12">
+            <div class="row">
+                <!-- Courses Card -->
+                <div class="col-sm-6">
+                    <div class="card info-card courses-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-briefcase"></i>
+                                </div>
+                                <div class="ps-4">
+                                    <h5 class="card-title m-0 p-0">Kurslar</h5>
+                                    <h6>{{courses}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Courses Card -->
+
+                <!-- Groups Card -->
+                <div class="col-sm-6">
+                    <div class="card info-card groups-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-clipboard-check"></i>
+                                </div>
+                                <div class="ps-4">
+                                    <h5 class="card-title m-0 p-0">Guruhlar</h5>
+                                    <h6>{{groups}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Groups Card -->
+            
+                <!-- Teachers Card -->
+                <div class="col-sm-6">
+                    <div class="card info-card teachers-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                                <div class="ps-4">
+                                    <h5 class="card-title m-0 p-0">Mentorlar</h5>
+                                    <h6>{{mentors}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Teachers Card -->
+            
+                <!-- Students Card -->
+                <div class="col-sm-6">
+                    <div class="card info-card students-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-4">
+                                    <h5 class="card-title m-0 p-0">Studentlar</h5>
+                                    <h6>{{students}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Students Card -->
+
+                {% if request.user.groups.all.0.name == "Student" %}
+                    {% include 'includes/dashboard_student.html' %}
+                {% elif request.user.groups.all.0.name == "Mentor" %}
+                    {% include 'includes/dashboard_teacher.html' %}
+                {% else %}
+                    {% include 'includes/dashboard_admin.html' %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5 col-sm-12">
+            <div class="calendar">
+                <header>
+                    <nav>
+                        <button id="prev">←</button>
+                        <button id="next">→</button>
+                    </nav>
+                    <h3></h3>
+                </header>
+        
+                <div class="days">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+        
+                <ul class="dates"></ul>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
